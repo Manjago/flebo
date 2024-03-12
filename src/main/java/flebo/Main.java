@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -18,7 +19,10 @@ public class Main {
         //System.setProperty(“webdriver.gecko.driver”, “/path/to/geckodriver”);
 
         // Create a new instance of the Firefox driver
+        FirefoxProfile profile = new FirefoxProfile();
         FirefoxOptions options = new FirefoxOptions();
+        options.setProfile(profile);
+        //options.addArguments("-headless");
         WebDriver driver = new FirefoxDriver(options);
 
         //Set implicit wait:
@@ -42,10 +46,11 @@ public class Main {
 
             Thread.sleep(5000);
 
-            final WebElement main = driver.findElement(By.id("main"));
-            System.out.println("main: " + main);
-            System.out.println("main: " + main.getText());
-            System.out.println("Ok");
+            WebElement authors = driver.findElement(By.xpath("//div[@id='main-wrapper']/div/h3[2]"));
+            System.out.println("[" + authors.getText() + "]");
+
+            // https://flibusta.is/b/558115/fb2
+            // https://flibusta.is/booksearch - вот нормальная стартовая страница
 
         } catch (Exception e) {
             e.printStackTrace();
