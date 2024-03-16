@@ -22,7 +22,7 @@ public class Main {
         FirefoxProfile profile = new FirefoxProfile();
         FirefoxOptions options = new FirefoxOptions();
         options.setProfile(profile);
-        //options.addArguments("-headless");
+        options.addArguments("-headless");
         WebDriver driver = new FirefoxDriver(options);
 
         //Set implicit wait:
@@ -38,16 +38,20 @@ public class Main {
 
         try {
             // Navigate to a web page
-            driver.get("https://flibusta.is/");
-            final WebElement input = driver.findElement(By.name("ask"));
-            input.click();
-            input.sendKeys("Злобин");
-            input.submit();
+            driver.get("https://flibusta.is/booksearch");
+            driver.findElement(By.name("chs")).click();
+            driver.findElement(By.name("cha")).click();
+            final WebElement ask = driver.findElement(By.name("ask"));
+            ask.sendKeys("Вино");
+            ask.submit();
 
             Thread.sleep(5000);
 
-            WebElement authors = driver.findElement(By.xpath("//div[@id='main-wrapper']/div/h3[2]"));
-            System.out.println("[" + authors.getText() + "]");
+            WebElement element = driver.findElement(By.xpath("//div[@id='container']/div[@id='main-wrapper']/div/ul"));
+            System.out.println(element.getText());
+
+            //WebElement authors = driver.findElement(By.xpath("//div[@id='main-wrapper']/div/h3[2]"));
+            //System.out.println("[" + authors.getText() + "]");
 
             // https://flibusta.is/b/558115/fb2
             // https://flibusta.is/booksearch - вот нормальная стартовая страница
