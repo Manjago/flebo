@@ -1,6 +1,8 @@
 package flebo;
 
 
+import flebo.logic.BookSearchProcessor;
+import flebo.logic.IncomingPublisher;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,10 +13,31 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.concurrent.Flow;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
+
     public static void main(String[] args) {
+        final IncomingPublisher incomingPublisher = new IncomingPublisher();
+        final BookSearchProcessor bookSearchProcessor = new BookSearchProcessor();
+        Flow.Subscription s = new Flow.Subscription() {
+            @Override
+            public void request(long n) {
+                    incomingPublisher.send();
+            }
+
+            @Override
+            public void cancel() {
+
+            }
+        };
+        incomingPublisher.subscribe(bookSearchProcessor);
+        bookSearchProcessor.onSubscribe(s);
+
+    }
+
+    public static void main2(String[] args) {
         // Specify the path of the GeckoDriver executable
         //System.setProperty(“webdriver.gecko.driver”, “/path/to/geckodriver”);
 
