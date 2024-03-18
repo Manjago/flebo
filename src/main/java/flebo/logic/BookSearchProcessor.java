@@ -1,14 +1,13 @@
 package flebo.logic;
 
-import flebo.model.BookSearchRequest;
+import flebo.model.IncomingRawRequest;
 import flebo.model.BookSearchResponse;
 
 import java.util.concurrent.Flow;
-import java.util.concurrent.SubmissionPublisher;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class BookSearchProcessor
-        implements Flow.Processor<BookSearchRequest, BookSearchResponse>{
+        implements Flow.Processor<IncomingRawRequest, BookSearchResponse>{
 
     private Flow.Subscription subscription;
     private AtomicInteger counter = new AtomicInteger(5);
@@ -20,7 +19,7 @@ public class BookSearchProcessor
     }
 
     @Override
-    public void onNext(BookSearchRequest item) {
+    public void onNext(IncomingRawRequest item) {
         System.out.println("got " + item);
         int decrementAndGet = counter.decrementAndGet();
         if (decrementAndGet > 0) {

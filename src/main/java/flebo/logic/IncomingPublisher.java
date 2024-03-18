@@ -1,19 +1,19 @@
 package flebo.logic;
 
-import flebo.model.BookSearchRequest;
+import flebo.model.IncomingRawRequest;
 
 import java.util.concurrent.Flow;
 
-public class IncomingPublisher implements Flow.Publisher<BookSearchRequest>{
+public class IncomingPublisher implements Flow.Publisher<IncomingRawRequest>{
 
-    private Flow.Subscriber<? super BookSearchRequest> subscriber;
+    private Flow.Subscriber<? super IncomingRawRequest> subscriber;
 
     @Override
-    public void subscribe(Flow.Subscriber<? super BookSearchRequest> subscriber) {
+    public void subscribe(Flow.Subscriber<? super IncomingRawRequest> subscriber) {
         this.subscriber = subscriber;
     }
 
     public void send() {
-        this.subscriber.onNext(new BookSearchRequest());
+        this.subscriber.onNext(new IncomingRawRequest("gg"));
     }
 }
